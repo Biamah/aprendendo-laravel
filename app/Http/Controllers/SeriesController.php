@@ -7,7 +7,9 @@ use App\Models\Serie;
 class SeriesController extends Controller
 {
     public function index(Request $request) {
-        $series = Serie::all();
+        $series = Serie::query()
+            ->orderBy('nome')
+            ->get();
 
         return view('serie.index', compact('series'));
     }
@@ -22,6 +24,6 @@ class SeriesController extends Controller
         $nome = $request->nome;
         $serie = Serie::create($request->all());
 
-        echo "Série com id {$serie->id} criada: {$serie->nome}";
+        return redirect('/series');
     }
 }
